@@ -1,16 +1,66 @@
-<h1>Login</h1>
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1>Iniciar Sesión</h1>
+      <p>Bienvenido de vuelta</p>
+    </div>
 
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <label for="">Correo</label>
-    <input type="email" formControlName="correo">
-    <div *ngIf="loginForm.get('correo')?.invalid && loginForm.get('correo')?.touched">
-        Correo invalido
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <!-- Email -->
+      <div class="form-group">
+        <label for="correo" class="form-label">Correo Electrónico</label>
+        <input
+          id="correo"
+          type="email"
+          formControlName="correo"
+          class="form-input"
+          placeholder="tu@correo.com"
+        />
+        <div
+          *ngIf="loginForm.get('correo')?.invalid && loginForm.get('correo')?.touched"
+          class="error-message"
+        >
+          <span class="error-icon">⚠️</span> Por favor ingresa un correo válido
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password" class="form-label">Contraseña</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="form-input"
+          placeholder="Mínimo 5 caracteres"
+        />
+        <div
+          *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          class="error-message"
+        >
+          <span class="error-icon">⚠️</span> Contraseña mínimo 5 caracteres
+        </div>
+      </div>
+
+      <!-- Error General -->
+      <div *ngIf="error" class="error-banner">
+        <span class="error-icon-banner">✕</span>
+        <span>{{ error }}</span>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid"
+        class="submit-button"
+      >
+        Iniciar Sesión
+      </button>
+    </form>
+
+    <!-- Link to Register -->
+    <div class="auth-footer">
+      <p>¿No tienes cuenta? <a routerLink="/auth/register">Regístrate aquí</a></p>
     </div>
-    <label for="">Contraseña</label>
-    <input type="password" formControlName="password">
-    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-      Password mínimo 5 caracteres
-    </div>
-    <div *ngIf="error">{{error}}</div>
-    <button type="submit" [disabled]="loginForm.invalid">Iniciar sesion</button>
-</form>
+  </div>
+</div>
