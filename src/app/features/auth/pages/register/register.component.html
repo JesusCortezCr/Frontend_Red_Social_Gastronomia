@@ -1,1 +1,20 @@
-<p>register works!</p>
+<h1>Crear cuenta</h1>
+<form [formGroup]="registroForm" (ngSubmit)="onSubmitRegistro()">
+    <label for="">Nombre</label>
+    <input type="text" formControlName="nombre" placeholder="Ingrese nombre">
+    <div *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched">
+        Nombre es obligatorio
+    </div>
+
+    <label for="">Apellido</label>
+    <input type="text" formControlName="apellido" placeholder="Ingrese apellido">
+    <label for="">correo</label>
+    <input type="email" formControlName="correo" placeholder="Ingrese correo">
+    <div *ngIf="registroForm.get('correo')?.invalid && registroForm.get('correo')?.touched">
+        Correo inválido
+    </div>
+    <label for="">contraseña</label>
+    <input type="password" formControlName="password" placeholder="Ingrese clave">
+    <div *ngIf="error" class="text-red-500">{{ error }}</div>
+    <button type="submit" class="bg-amber-300">Registrar</button>
+</form>

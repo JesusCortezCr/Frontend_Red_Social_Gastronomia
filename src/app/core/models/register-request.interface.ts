@@ -4,6 +4,12 @@ export interface RegistroRequest{
     correo:string;
     password:string;
 }
-export interface RegisterResponse{
-    
+export interface RegistroResponse{
+    id:number;
+    correo:string;
+    nombre:string;
+    apellido:string;
+    biografia:string;
+    rolNombre : string;
+    estado: boolean;
 }
