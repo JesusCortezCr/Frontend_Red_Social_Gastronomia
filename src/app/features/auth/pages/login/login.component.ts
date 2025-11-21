@@ -8,7 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 @Component({
   selector: 'app-login',
   standalone:true,
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf,CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -21,7 +21,11 @@ onSubmit() {
       localStorage.setItem('token', res.token);
       localStorage.setItem('rol',res.rol);
       localStorage.setItem('correo',res.correo);
-      this.router.navigate(['/home-post'])
+      if(res.rol==='ROLE_USUARIO'){
+        this.router.navigateByUrl('/user')
+      }else{
+        this.router.navigate(['/home-post'])
+      }
     },
     error: (err)=>{
       this.error=err.error || 'Credenciales incorrectas';

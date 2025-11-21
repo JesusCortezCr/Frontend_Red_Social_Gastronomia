@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from "@angular/forms";
 import { AuthService } from '../../../../core/services/auth.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone:true,
-  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule,CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -18,7 +19,7 @@ export class RegisterComponent {
         nombre: ['',[Validators.required]],
         apellido: ['',[Validators.required]],
         correo: ['',[Validators.required,Validators.email]],
-        password: ['',[Validators.required,Validators.min(5)]]
+        password: ['',[Validators.required,Validators.minLength(5)]]
       }
     )
   }
@@ -28,7 +29,7 @@ onSubmitRegistro() {
   this.authService.registro(this.registroForm.value).subscribe({
     next:(usuario)=>{
       console.log("Usuario creado exitosamente",usuario);
-      this.router.navigate(['/auth/login'])
+      this.router.navigateByUrl('/auth/login')
     },
     error:(err)=>{
       this.error=err.error || 'Error al registrar la cuenta';
