@@ -1,19 +1,102 @@
-<h1>Crear cuenta</h1>
-<form [formGroup]="registroForm" (ngSubmit)="onSubmitRegistro()">
-    <label for="">Nombre</label>
-    <input type="text" formControlName="nombre" placeholder="Ingrese nombre">
-    <div *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched">
-        Nombre es obligatorio
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1>Crear Cuenta</h1>
+      <p>Únete a nuestra comunidad</p>
     </div>
 
-    <label for="">Apellido</label>
-    <input type="text" formControlName="apellido" placeholder="Ingrese apellido">
-    <label for="">correo</label>
-    <input type="email" formControlName="correo" placeholder="Ingrese correo">
-    <div *ngIf="registroForm.get('correo')?.invalid && registroForm.get('correo')?.touched">
-        Correo inválido
+    <form [formGroup]="registroForm" (ngSubmit)="onSubmitRegistro()" class="auth-form">
+      <!-- Nombre -->
+      <div class="form-group">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input
+          id="nombre"
+          type="text"
+          formControlName="nombre"
+          class="form-input"
+          placeholder="Tu nombre"
+        />
+        <div
+          *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched"
+          class="error-message"
+        >
+          <span class="error-icon">⚠️</span> El nombre es obligatorio
+        </div>
+      </div>
+
+      <!-- Apellido -->
+      <div class="form-group">
+        <label for="apellido" class="form-label">Apellido</label>
+        <input
+          id="apellido"
+          type="text"
+          formControlName="apellido"
+          class="form-input"
+          placeholder="Tu apellido"
+        />
+        <div
+          *ngIf="registroForm.get('apellido')?.invalid && registroForm.get('apellido')?.touched"
+          class="error-message"
+        >
+          <span class="error-icon">⚠️</span> El apellido es obligatorio
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="correo" class="form-label">Correo Electrónico</label>
+        <input
+          id="correo"
+          type="email"
+          formControlName="correo"
+          class="form-input"
+          placeholder="tu@correo.com"
+        />
+        <div
+          *ngIf="registroForm.get('correo')?.invalid && registroForm.get('correo')?.touched"
+          class="error-message"
+        >
+          <span class="error-icon">⚠️</span> Por favor ingresa un correo válido
+        </div>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="form-group">
+        <label for="password" class="form-label">Contraseña</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="form-input"
+          placeholder="Mínimo 5 caracteres"
+        />
+        <div
+          *ngIf="registroForm.get('password')?.invalid && registroForm.get('password')?.touched"
+          class="error-message"
+        >
+          <span class="error-icon">⚠️</span> Contraseña mínimo 5 caracteres
+        </div>
+      </div>
+
+      <!-- Error General -->
+      <div *ngIf="error" class="error-banner">
+        <span class="error-icon-banner">✕</span>
+        <span>{{ error }}</span>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        [disabled]="registroForm.invalid"
+        class="submit-button"
+      >
+        Registrarse
+      </button>
+    </form>
+
+    <!-- Link to Login -->
+    <div class="auth-footer">
+      <p>¿Ya tienes cuenta? <a routerLink="/auth/login">Inicia sesión aquí</a></p>
     </div>
-    <label for="">contraseña</label>
-    <input type="password" formControlName="password" placeholder="Ingrese clave">
-    <button type="submit" class="bg-amber-300">Registrar</button>
-</form>
+  </div>
+</div>
