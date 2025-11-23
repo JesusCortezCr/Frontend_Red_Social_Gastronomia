@@ -25,6 +25,26 @@ export class LoginComponent {
       password: ["", [Validators.required, Validators.minLength(5)]],
     });
   }
+onSubmit() {
+  if(this.loginForm.invalid) return;
+  this.authService.login(this.loginForm.value).subscribe({
+    next:(res)=>{
+      localStorage.setItem('token', res.token);
+      localStorage.setItem('rol',res.rol);
+      localStorage.setItem('correo',res.correo);
+      if(res.rol==='ROLE_USUARIO'){
+        this.router.navigateByUrl('/user')
+      }else{
+        this.router.navigate(['/home-post'])
+      }
+    },
+    error: (err)=>{
+      this.error=err.error || 'Credenciales incorrectas';
+    }
+  })
+}
+error: string="Credenciales incorrectas";
+loginForm: FormGroup;
 
   onSubmit() {
     if (this.loginForm.invalid) return;

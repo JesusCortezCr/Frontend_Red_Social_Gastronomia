@@ -10,7 +10,7 @@ import { RegistroRequest, RegistroResponse } from '../models/register-request.in
 export class AuthService {
 
 
-  private apiUrl : string='http://localhost:8080/auth'
+  private apiUrl : string='http://localhost:8080/api/auth'
 
   constructor(private http : HttpClient) { }
 
@@ -19,6 +19,6 @@ export class AuthService {
   }
 
   registro(credenciales : RegistroRequest):Observable<RegistroResponse>{
-    return this.http.post<RegistroResponse>(`${this.apiUrl}/registro/`,credenciales);
+    return this.http.post<RegistroResponse>(`${this.apiUrl}/registro`,credenciales);
   }
 }

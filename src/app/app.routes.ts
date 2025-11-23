@@ -12,6 +12,7 @@ import { NotificationsComponent } from './features/shared-pages/notifications/no
 import { ProfileComponent } from './features/shared-pages/profile/profile.component';
 import { LoginComponent } from './features/auth/pages/login/login.component';
 import { RegisterComponent } from './features/auth/pages/register/register.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   // Rutas publicas
@@ -26,5 +27,13 @@ export const routes: Routes = [
       { path: 'auth/register', loadComponent: () => import('./features/auth/pages/register/register.component').then(m => m.RegisterComponent), title: 'Registro' },
     ],
   },
+  {
+    path:'user',
+    loadComponent:()=> import('./layout/user-layout/user-layout/user-layout.component').then(m=>m.UserLayoutComponent),
+    canActivate: [authGuard],
+    children:[
+      {path:'',loadComponent:()=> import('./features/user/pages/home-user/home-user.component').then(m=>m.HomeUserComponent)}
+    ]
+  }
 
 ];
