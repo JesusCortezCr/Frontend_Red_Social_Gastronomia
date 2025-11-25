@@ -43,22 +43,5 @@ onSubmit() {
     }
   })
 }
-error: string="Credenciales incorrectas";
-loginForm: FormGroup;
 
-  onSubmit() {
-    if (this.loginForm.invalid) return;
-
-    this.authService.login(this.loginForm.value).subscribe({
-      next: (res) => {
-        localStorage.setItem("token", res.token);
-        localStorage.setItem("rol", res.rol);
-        localStorage.setItem("correo", res.correo);
-        this.router.navigate(["/home-post"]);
-      },
-      error: (err) => {
-        this.error = err.error || "Credenciales incorrectas";
-      },
-    });
-  }
 }
