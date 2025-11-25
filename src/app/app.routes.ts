@@ -1,17 +1,4 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './features/public/pages/home/home.component';
-import { ContactoComponent } from './features/public/pages/contacto/contacto.component';
-import { NosotrosComponent } from './features/public/pages/nosotros/nosotros.component';
-import { FavouritesComponent } from './features/user/pages/favourites/favourites.component';
-import { FollowersComponent } from './features/user/pages/followers/followers.component';
-import { WarningsComponent } from './features/moderator/pages/warnings/warnings.component';
-import { CategoriesComponent } from './features/administrator/pages/categories/categories.component';
-import { UsersMaintenanceComponent } from './features/administrator/pages/users-maintenance/users-maintenance.component';
-import { CreatePostComponent } from './features/shared-pages/create-post/create-post.component';
-import { NotificationsComponent } from './features/shared-pages/notifications/notifications.component';
-import { ProfileComponent } from './features/shared-pages/profile/profile.component';
-import { LoginComponent } from './features/auth/pages/login/login.component';
-import { RegisterComponent } from './features/auth/pages/register/register.component';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -34,6 +21,12 @@ export const routes: Routes = [
     children:[
       {path:'',loadComponent:()=> import('./features/user/pages/home-user/home-user.component').then(m=>m.HomeUserComponent)}
     ]
+  },
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./pages/not-found/not-found.component')
+        .then(m => m.NotFoundComponent),
   }
 
 ];

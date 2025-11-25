@@ -6,7 +6,6 @@
     </div>
 
     <form [formGroup]="registroForm" (ngSubmit)="onSubmitRegistro()" class="auth-form">
-      <!-- Nombre -->
       <div class="form-group">
         <label for="nombre" class="form-label">Nombre</label>
         <input
@@ -24,7 +23,6 @@
         </div>
       </div>
 
-      <!-- Apellido -->
       <div class="form-group">
         <label for="apellido" class="form-label">Apellido</label>
         <input
@@ -42,7 +40,6 @@
         </div>
       </div>
 
-      <!-- Email -->
       <div class="form-group">
         <label for="correo" class="form-label">Correo Electrónico</label>
         <input
@@ -60,7 +57,6 @@
         </div>
       </div>
 
-      <!-- Contraseña -->
       <div class="form-group">
         <label for="password" class="form-label">Contraseña</label>
         <input
@@ -78,13 +74,11 @@
         </div>
       </div>
 
-      <!-- Error General -->
       <div *ngIf="error" class="error-banner">
         <span class="error-icon-banner">✕</span>
         <span>{{ error }}</span>
       </div>
 
-      <!-- Submit Button -->
       <button
         type="submit"
         [disabled]="registroForm.invalid"
@@ -94,7 +88,6 @@
       </button>
     </form>
 
-    <!-- Link to Login -->
     <div class="auth-footer">
       <p>¿Ya tienes cuenta? <a routerLink="/auth/login">Inicia sesión aquí</a></p>
     </div>
