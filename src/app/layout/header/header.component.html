@@ -5,27 +5,54 @@
 <header class="bg-white border-b border-gray-200">
     <nav class="container mx-auto flex items-center justify-between p-2 md:p-3">
         <div class="text-2xl font-bold text-gray-800">
-            <a routerLink="/"><img src="principal.png" alt="" class="w-85 h-35"></a>
+            <a routerLink="/"><img src="principal.png" alt="" class="w-60 h-30"></a>
         </div>
 
-        <ul class="hidden md:flex items-center space-x-12 text-sm text-gray-700">
-            <li><a routerLink="/" class="hover:text-gray-900">Inicio</a></li>
-            <li><a routerLink="/nosotros" class="hover:text-gray-900">Nosotros</a></li>
-            <li><a routerLink="/contacto" class="hover:text-gray-900">Contacto</a></li>
+        <!-- Paginas y enlaces publicos -->
+        <ul *ngIf="!isLoggedIn" class="hidden md:flex items-center space-x-12 text-sm text-gray-700">
+                <li><a routerLink="/" class="hover:text-gray-900">Inicio</a></li>
+                <li><a routerLink="/nosotros" class="hover:text-gray-900">Nosotros</a></li>
+                <li><a routerLink="/contacto" class="hover:text-gray-900">Contacto</a></li>
         </ul>
 
-        <div class="flex items-center space-x-4">
+        <!-- Paginas y enlaces para rol USUARIO -->
+        <ul *ngIf="isLoggedIn && userRole==='ROLE_USUARIO' " class="hidden md:flex items-center space-x-12 text-sm text-gray-700">
+                <li><a routerLink="/user/publicaciones" class="hover:text-gray-900">Publicaciones</a></li>
+                <li><a routerLink="/user/notificaciones" class="hover:text-gray-900">Notificaciones</a></li>
+                <li><a routerLink="/user/perfil" class="hover:text-gray-900">Mi Perfil</a></li>
+                <li><a routerLink="/user/crear-publicacion" class="hover:text-gray-900">Crear publicacion</a></li>
+                <li><a routerLink="/user/mis-publicaciones" class="hover:text-gray-900">Mis Publicaciones</a></li>
+        </ul>
+        <!-- Paginas y enlaces para rol MODERADOR -->
+        <ul *ngIf="isLoggedIn && userRole==='ROLE_MODERADOR' " class="hidden md:flex items-center space-x-12 text-sm text-gray-700">
+                <li><a routerLink="/moderador/publicaciones" class="hover:text-gray-900">Publicaciones</a></li>
+                <li><a routerLink="/moderador/notificaciones" class="hover:text-gray-900">Notificaciones</a></li>
+                <li><a routerLink="/moderador/perfil" class="hover:text-gray-900">Mi Perfil</a></li>
+                <li><a routerLink="/moderador/crear-publicacion" class="hover:text-gray-900">Crear publicacion</a></li>
+        </ul>
+        <!-- Paginas y enlaces para rol ADMINISTRADOR -->
+        <ul *ngIf="isLoggedIn && userRole==='ROLE_ADMINISTRADOR' " class="hidden md:flex items-center space-x-12 text-sm text-gray-700">
+                <li><a routerLink="/administrador/mantenimiento-usuarios" class="hover:text-gray-900">Mantenimiento de cuentas</a></li>
+                <li><a routerLink="/administrador/crear-categoria" class="hover:text-gray-900">Agregar categoria</a></li>
+                <li><a routerLink="/administrador/perfil" class="hover:text-gray-900">Mi perfil</a></li>
+                <li><a routerLink="/administrador/notificaciones" class="hover:text-gray-900">Notificaciones</a></li>
+        </ul>
 
-            <a routerLink="/auth/login"
+        <div  class="flex items-center space-x-4">
+            <!-- Botones si no estas logeado -->
+            <a *ngIf="!isLoggedIn" routerLink="/auth/login"
                 class="bg-yellow-500 text-gray-900 font-semibold py-2 px-4 rounded-lg hover:bg-yellow-600 transition duration-150 text-sm shadow-md">
                 Iniciar Sesión
             </a>
 
-            <a routerLink="/auth/register"
+            <a *ngIf="!isLoggedIn" routerLink="/auth/register"
                 class="border border-gray-300 text-gray-900 font-semibold py-2 px-4 rounded-lg hover:bg-gray-50 transition duration-150 text-sm hidden sm:block">
                 Registrar Cuenta
             </a>
-
+            <!-- Botones si estas logeado -->
+            <div *ngIf="isLoggedIn">
+                <button class="bg-yellow-300 border-2" (click)="loggout()">Cerrar sesion</button>
+            </div>
             <div class="md:hidden">
                 <button id="menu-btn" class="text-gray-800 focus:outline-none p-1" (click)="toggleMenu()">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -38,14 +65,14 @@
     </nav>
 
     <div id="mobile-menu" class="md:hidden bg-gray-50 border-t border-gray-200" [class.hidden]="!isMenuOpen">
-         <ul class="p-4 space-y-2 text-gray-700">
+        <ul class="p-4 space-y-2 text-gray-700">
             <li><a routerLink="/" class="block hover:bg-gray-100 p-2 rounded">Inicio</a></li>
-         <li><a routerLink="/nosotros" class="block hover:bg-gray-100 p-2 rounded">Nosotros</a></li>
-           <li><a routerLink="/contacto" class="block hover:bg-gray-100 p-2 rounded">Contacto</a></li>
-             <li><a routerLink="/auth/login" class="block hover:bg-gray-100 p-2 rounded">Iniciar Sesión</a>
+            <li><a routerLink="/nosotros" class="block hover:bg-gray-100 p-2 rounded">Nosotros</a></li>
+            <li><a routerLink="/contacto" class="block hover:bg-gray-100 p-2 rounded">Contacto</a></li>
+            <li><a routerLink="/auth/login" class="block hover:bg-gray-100 p-2 rounded">Iniciar Sesión</a>
             </li>
-          <li><a routerLink="/auth/register" class="block hover:bg-gray-100 p-2 rounded">Registrar
+            <li><a routerLink="/auth/register" class="block hover:bg-gray-100 p-2 rounded">Registrar
                     Cuenta</a></li>
-           </ul>
-        </div>
+        </ul>
+    </div>
 </header>
