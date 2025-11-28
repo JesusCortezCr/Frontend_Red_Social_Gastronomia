@@ -38,25 +38,28 @@ export class HeaderComponent  implements OnInit{
     this.authService.logout().subscribe({
       next:()=>{
         //limpia el local storage
-        this.handleLogout();
+        this.resetLocalStateAndClearSession();
       },
       error:(error)=>{
         console.log('Error al cerrar sesion: ',error);
-        this.handleLogout();
+        this.resetLocalStateAndClearSession();
       }
     })
   }
-  handleLogout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('rol');
-    localStorage.removeItem('correo');
-
+resetLocalStateAndClearSession() {
+    // 1. Limpia el Local Storage y navega (AuthService.clearSession hace esto)
+    this.authService.clearSession();
+    
+    // 2. Resetea los estados del componente (Header)
     this.isLoggedIn=false;
     this.userEmail=null;
     this.userRole=null;
     this.isMenuOpen=false;
-    this.router.navigate(['/'])
+    
+    // El AuthService ya redirige, si quieres redirigir a una página diferente (ej. inicio), cámbialo aquí:
+    this.router.navigate(['/']); 
   }
+  
 
   
 }

@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PublicacionService {
+  eliminarPublicacion(id: number):Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 
   private apiUrl:string =`${environment.apiUrl}/publicaciones`
   constructor(private http:HttpClient) { }
@@ -32,8 +35,7 @@ export class PublicacionService {
     return this.http.put<Publicacion>(`${this.apiUrl}/${id}/image`,formData);
   }
 
-  traerMisPublicacionesPorId(id:number):Observable<Publicacion[]>{
-    //traer Id persona logeada
-    return this.http.get<Publicacion[]>(`${this.apiUrl}/mis-publicaciones/${id}`);
+  traerMisPublicaciones():Observable<Publicacion[]>{
+    return this.http.get<Publicacion[]>(`${this.apiUrl}/mis-publicaciones`);
   }
 }
