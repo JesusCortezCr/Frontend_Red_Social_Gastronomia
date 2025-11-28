@@ -1,1 +1,39 @@
-<p>create-post works!</p>
+<h1 class="text-center">Crear publicacion</h1>
+<!-- Seccion si es rol usuario -->
+<div class="flex flex-row">
+    <!-- Formulario para llenar campos de la publicaicon  -->
+    <div class="border-2 flex flex-col p-2 w-[550px] m-1.5 bg-amber-300">
+        <h2 class="text-center">Ingrese los datos para su publicacion</h2>
+        <form [formGroup]="form" action="" class="border-2 flex flex-col p-1">
+            <label for="">Ingrese titulo</label>
+            <input formControlName="titulo" class="bg-blue-400 w-[400px] m-0.5" type="text"
+                placeholder="Ejem : Preparacion del mejor arroz a la cubana">
+            <label for="">Ingrese descripcion</label>
+            <textarea formControlName="descripcion" class="bg-blue-400 w-[400px] m-0.5" id=""></textarea>
+            <label for="">Seleccione una categoria</label>
+            <select formControlName="categoriaId" class="border p-2" >
+                <option disabled selected>Seleccione una categoria</option>
+                <option *ngFor="let cat of categorias" [value]="cat.id">{{cat.nombre}}</option>
+            </select>
+            <label for="">Seleccionar imagen</label>
+            <input (change)="imagenSeleccionado($event)" class="bg-blue-400 w-[400px] m-0.5" type="file" placeholder="suba su archivo o imagen">
+            <div class="field flex flex-column gap-1">
+      </div>
+            <button [disabled]="form.invalid" (click)="crearPublicacion()" class="bg-green-500 w-[200px] m-auto">Publicar ahora</button>
+        </form>
+    </div>
+    <!-- Vista previa publicacion -->
+    <div class="flex flex-row">
+        <div  class="border-2 flex flex-col p-2 w-[550px] m-1.5 bg-sky-300">
+            <span>Nombre de usuario</span>
+            <div *ngIf="vistaPrevia.imagenUrl">
+                <img [src]="vistaPrevia.imagenUrl" alt="" class="w-64 h-auto mt-3 border" >
+            </div>
+            <i>Icono corazon</i>
+            <i>Icono comentario</i>
+            <span>{{vistaPrevia.titulo}}</span>
+            <p>{{vistaPrevia.descripcion}}</p>
+            <span>{{vistaPrevia.categoria}}</span>
+        </div>
+    </div>
+</div>

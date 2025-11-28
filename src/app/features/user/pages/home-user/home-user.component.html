@@ -1,9 +1,74 @@
-<header>
-    <nav>
-        <a routerLink="/">Home</a> | 
-    </nav>
-</header>
-<main>
-    <router-outlet></router-outlet>
-</main>
-<footer>Public-Layout-Footer</footer>
+<h1>Publicaciones</h1>
+<div *ngFor="let pub of publicaciones" class="w-[550px] bg-amber-300 p-1.5 m-1.5">
+    <div class="flex items-center p-4">
+        <div
+            class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-lg shadow-md">
+            {{ obtenerIniciales(pub.usuario.nombre) }}
+        </div>
+        <div class="ml-3 flex-1">
+            <p class="font-semibold text-gray-900">{{ pub.usuario.nombre }}</p>
+            <p class="text-xs text-gray-500">{{ formatearFecha(pub.fechaCreacion) }}</p>
+        </div>
+        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">
+            {{ pub.categoria.nombre }}
+        </span>
+    </div>
+
+    <!-- Imagen -->
+    <div *ngIf="pub.image" class="w-[300px] bg-gray-100">
+        <img [src]="pub.image.imageUrl" [alt]="pub.titulo" class="w-full h-auto max-h-[600px] object-cover">
+    </div>
+    <div *ngIf="!pub.image" class="w-full h-64 bg-gray-200 flex items-center justify-center">
+        <svg class="h-20 w-20 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+            </path>
+        </svg>
+    </div>
+
+    <!-- Acciones -->
+    <div class="px-4 py-3 border-t">
+        <div class="flex gap-4 mb-3">
+            <button class="hover:text-red-500 transition flex items-center gap-1 group">
+                <svg class="w-7 h-7 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                    </path>
+                </svg>
+                <span class="text-sm font-medium">{{ pub.cantidadLikes || 0 }}</span>
+            </button>
+
+            <button class="hover:text-blue-500 transition flex items-center gap-1 group">
+                <svg class="w-7 h-7 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
+                    </path>
+                </svg>
+                <span class="text-sm font-medium">{{ pub.comentarios?.length || 0 }}</span>
+            </button>
+
+            <button class="hover:text-yellow-500 transition ml-auto">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Rating -->
+        <div *ngIf="pub.calificacion > 0" class="flex items-center gap-1 mb-2">
+            <span class="text-yellow-500 text-sm">⭐</span>
+            <span class="text-sm font-medium text-gray-700">{{ pub.calificacion }}/5</span>
+        </div>
+    </div>
+
+    <!-- Contenido -->
+    <div class="px-4 pb-4">
+        <p class="font-bold text-gray-900 mb-2 text-lg">{{ pub.titulo }}</p>
+        <p class="text-gray-700 text-sm leading-relaxed">
+            <span class="font-semibold">{{ pub.usuario.nombre }}</span> {{ pub.descripcion }}
+        </p>
+    </div>
+</div>
