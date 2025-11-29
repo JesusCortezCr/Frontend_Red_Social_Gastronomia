@@ -33,13 +33,21 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.invalid) return;
-    
+
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
+        this.authService.saveUserSession(res);
+
         localStorage.setItem('token', res.token); // ← 'token' no 'authToken'
         localStorage.setItem('rol', res.rol);
         localStorage.setItem('correo', res.correo);
-        
+
+        //verificacion para el id del usuario
+        const userId = (res as any).id ?? (res as any).userId ?? (res as any).usuarioId;
+        if (userId !== undefined && userId !== null) {
+          localStorage.setItem('userId', userId.toString());
+        }
+
         if (res.rol === 'ROLE_USUARIO') {
           this.router.navigateByUrl('/user');
         } else if (res.rol === 'ROLE_MODERADOR') {
