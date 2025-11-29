@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 const CORREO_KEY = 'correo';
 const ROL_KEY = 'rol';
 const TOKEN_KEY = 'token';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +21,7 @@ export class AuthService {
   constructor(private http : HttpClient,private router: Router) { }
 
   login( credenciales : LoginRequest) : Observable<LoginResponse>{
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`,credenciales)
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`,credenciales);
   }
 
   registro(credenciales : RegistroRequest):Observable<RegistroResponse>{
@@ -52,8 +51,14 @@ export class AuthService {
     localStorage.removeItem(TOKEN_KEY); 
     localStorage.removeItem(ROL_KEY);
     localStorage.removeItem(CORREO_KEY);
+    localStorage.removeItem('userId');
 
     this.router.navigate(['/auth/login']);
     console.log("✅ Local Storage limpiado y redirigido.");
+  }
+
+  getCurrentUserId(): number | null {
+    const userId = localStorage.getItem('userId');
+    return userId ? parseInt(userId, 10) : null;
   }
 }

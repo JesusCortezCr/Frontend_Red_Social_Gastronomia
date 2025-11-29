@@ -39,6 +39,7 @@ export class LoginComponent {
         localStorage.setItem('token', res.token); // ← 'token' no 'authToken'
         localStorage.setItem('rol', res.rol);
         localStorage.setItem('correo', res.correo);
+        localStorage.setItem('userId', res.id.toString());
         
         if (res.rol === 'ROLE_USUARIO') {
           this.router.navigateByUrl('/user');
