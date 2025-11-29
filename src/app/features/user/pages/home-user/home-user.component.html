@@ -39,7 +39,8 @@
                 <span class="text-sm font-medium">{{ pub.cantidadLikes || 0 }}</span>
             </button>
 
-            <button class="hover:text-blue-500 transition flex items-center gap-1 group">
+            <button (click)="toggleComentarios(pub.id)"
+                class="hover:text-blue-500 transition flex items-center gap-1 group">
                 <svg class="w-7 h-7 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor"
                     viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -56,6 +57,11 @@
                 </svg>
             </button>
         </div>
+        <app-comentarios 
+            *ngIf="publicacionConComentarios === pub.id"
+            [publicacionId]="pub.id"
+            (comentarioCreado)="onComentarioCreado()"
+        ></app-comentarios>
 
         <!-- Rating -->
         <div *ngIf="pub.calificacion > 0" class="flex items-center gap-1 mb-2">
