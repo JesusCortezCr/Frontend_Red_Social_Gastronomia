@@ -10,26 +10,28 @@ import { Router } from '@angular/router';
 const CORREO_KEY = 'correo';
 const ROL_KEY = 'rol';
 const TOKEN_KEY = 'token';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
 
-  private apiUrl : string='http://localhost:8080/api/auth'
+  private apiUrl: string = 'http://localhost:8080/api/auth'
 
-  constructor(private http : HttpClient,private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
+
 
   login( credenciales : LoginRequest) : Observable<LoginResponse>{
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`,credenciales);
   }
 
-  registro(credenciales : RegistroRequest):Observable<RegistroResponse>{
-    return this.http.post<RegistroResponse>(`${this.apiUrl}/registro`,credenciales);
+  registro(credenciales: RegistroRequest): Observable<RegistroResponse> {
+    return this.http.post<RegistroResponse>(`${this.apiUrl}/registro`, credenciales);
   }
 
-  logout():Observable<LogoutResponse>{
-    return this.http.post<LogoutResponse>(`${this.apiUrl}/logout`,{});
+  logout(): Observable<LogoutResponse> {
+    return this.http.post<LogoutResponse>(`${this.apiUrl}/logout`, {});
   }
 
   isAuthenticated(): boolean {
@@ -48,7 +50,7 @@ export class AuthService {
   clearSession(): void {
     console.log("🔴 Ejecutando Limpieza de Sesión: Limpiando Local Storage...");
     // Usamos 'token'
-    localStorage.removeItem(TOKEN_KEY); 
+    localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(ROL_KEY);
     localStorage.removeItem(CORREO_KEY);
     localStorage.removeItem('userId');

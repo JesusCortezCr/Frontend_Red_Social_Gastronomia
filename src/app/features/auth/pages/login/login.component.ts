@@ -33,12 +33,21 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.invalid) return;
-    
+
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
-        localStorage.setItem('token', res.token); // ← 'token' no 'authToken'
+        this.authService.saveUserSession(res);
+
+        localStorage.setItem('token', res.token); 
         localStorage.setItem('rol', res.rol);
         localStorage.setItem('correo', res.correo);
+
+        //verificacion para el id del usuario
+        const userId = (res as any).id ?? (res as any).userId ?? (res as any).usuarioId;
+        if (userId !== undefined && userId !== null) {
+          localStorage.setItem('userId', userId.toString());
+        }
+
         localStorage.setItem('userId', res.id.toString());
         
         if (res.rol === 'ROLE_USUARIO') {
