@@ -11,9 +11,6 @@ const CORREO_KEY = 'correo';
 const ROL_KEY = 'rol';
 const TOKEN_KEY = 'token';
 
-const USER_ID_KEY = 'userId';
-const USER_DATA_KEY = 'userData';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -24,8 +21,9 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(credenciales: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credenciales)
+
+  login( credenciales : LoginRequest) : Observable<LoginResponse>{
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`,credenciales);
   }
 
   registro(credenciales: RegistroRequest): Observable<RegistroResponse> {
@@ -55,42 +53,14 @@ export class AuthService {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(ROL_KEY);
     localStorage.removeItem(CORREO_KEY);
+    localStorage.removeItem('userId');
 
     this.router.navigate(['/auth/login']);
     console.log("✅ Local Storage limpiado y redirigido.");
   }
 
-  saveUserSession(data: any): void {
-    if (!data) return;
-
-    if (data.token) {
-      localStorage.setItem(TOKEN_KEY, data.token);
-    }
-
-    if (data.rol) {
-      localStorage.setItem(ROL_KEY, data.rol);
-    }
-
-    if (data.correo) {
-      localStorage.setItem(CORREO_KEY, data.correo);
-    }
-
-    if (data.id) {
-      localStorage.setItem(USER_ID_KEY, data.id.toString());
-    }
-
-
-
-    localStorage.setItem(USER_DATA_KEY, JSON.stringify(data));
-  }
-
-  getUserId(): number | null {
-    const id = localStorage.getItem(USER_ID_KEY);
-    return id ? Number(id) : null;
-  }
-
-  getUserData(): any | null {
-    const data = localStorage.getItem(USER_DATA_KEY);
-    return data ? JSON.parse(data) : null;
+  getCurrentUserId(): number | null {
+    const userId = localStorage.getItem('userId');
+    return userId ? parseInt(userId, 10) : null;
   }
 }

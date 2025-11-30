@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Publicacion } from '../../../../core/models/publicacion';
 import { PublicacionService } from '../../../../core/services/publicacion.service';
+import { ComentariosComponent } from "../../../../components/comentario/comentario.component";
 
 @Component({
   selector: 'app-home-user',
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, ComentariosComponent],
   templateUrl: './home-user.component.html',
   styleUrl: './home-user.component.css',
 })
@@ -14,6 +15,7 @@ export class HomeUserComponent implements OnInit {
   publicaciones: Publicacion[] = [];
   cargando: boolean = false;
   error: string = '';
+  publicacionConComentarios: number | null = null;
 
   constructor(private publicacionService: PublicacionService) {}
 
@@ -56,5 +58,18 @@ export class HomeUserComponent implements OnInit {
     if (horas < 24) return `Hace ${horas}h`;
     if (dias < 7) return `Hace ${dias}d`;
     return date.toLocaleDateString();
+  }
+
+  toggleComentarios(publicacionId: number) {
+    if (this.publicacionConComentarios === publicacionId) {
+      this.publicacionConComentarios = null;
+    } else {
+      this.publicacionConComentarios = publicacionId;
+    }
+  }
+
+  onComentarioCreado() {
+    // Recargar publicaciones para actualizar contadores
+    this.cargarPublicaciones();
   }
 }

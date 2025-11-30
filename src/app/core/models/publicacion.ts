@@ -1,3 +1,4 @@
+import { Comentario } from './comentario';
 import { Image } from './image';
 
 export interface Publicacion {
@@ -25,7 +26,7 @@ export interface Publicacion {
   } | null;
   cantidadLikes?: number;
   cantidadDislikes?: number;
-  comentarios?: any[];
+  comentarios: Comentario[];
 }
 
 export interface PublicacionRequest {
