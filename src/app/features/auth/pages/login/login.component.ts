@@ -36,7 +36,6 @@ export class LoginComponent {
 
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
-        this.authService.saveUserSession(res);
 
         localStorage.setItem('token', res.token); 
         localStorage.setItem('rol', res.rol);
