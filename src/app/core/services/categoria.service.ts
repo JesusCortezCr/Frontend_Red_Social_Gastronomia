@@ -16,4 +16,8 @@ export class CategoriaService {
   traerCategorias():Observable<Categoria[]>{
     return this.http.get<Categoria[]>(`${this.apiUrl}/categorias`);
   }
+
+  agregarCategoria(categoria: Omit<Categoria, 'id'>): Observable<Categoria> {
+    return this.http.post<Categoria>(`${this.apiUrl}/categorias`, categoria);
+  }
 }
