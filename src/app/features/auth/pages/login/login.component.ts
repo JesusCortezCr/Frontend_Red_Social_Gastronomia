@@ -36,9 +36,8 @@ export class LoginComponent {
 
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
-        this.authService.saveUserSession(res);
 
-        localStorage.setItem('token', res.token); // ← 'token' no 'authToken'
+        localStorage.setItem('token', res.token); 
         localStorage.setItem('rol', res.rol);
         localStorage.setItem('correo', res.correo);
 
@@ -48,6 +47,8 @@ export class LoginComponent {
           localStorage.setItem('userId', userId.toString());
         }
 
+        localStorage.setItem('userId', res.id.toString());
+        
         if (res.rol === 'ROLE_USUARIO') {
           this.router.navigateByUrl('/user');
         } else if (res.rol === 'ROLE_MODERADOR') {

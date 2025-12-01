@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
     const rol = this.authService.getCurrentRole(); // Obtener el rol actual
     this.esAdministrador = rol === 'ROLE_ADMINISTRADOR'
 
-    const id = this.authService.getUserId();
+    const id = this.authService.getCurrentUserId();
     console.log("ID usuario desde localStorage:", id); 
 
     if (!id) {
